@@ -74,6 +74,11 @@ class MyApp:
         self.page.window_maximized = True  # Start maximized for better UX
         self.page.scroll = ft.ScrollMode.HIDDEN  # Let containers handle scrolling
         
+        # Set custom window icon (optional)
+        # icon_path = os.path.join(os.path.dirname(__file__), "app-icon.ico")
+        # if os.path.exists(icon_path):
+        #     self.page.window.icon = icon_path
+        
         # Application State
         self.current_view = None
         
