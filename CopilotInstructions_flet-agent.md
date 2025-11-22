@@ -65,6 +65,46 @@ ft.Colors.GREEN_50
 ft.colors.with_opacity(0.5, ft.Colors.BLUE)  # Note: 'colors' lowercase for methods
 ```
 
+### 5. Tooltip Usage
+**WRONG:**
+```python
+ft.Tooltip(
+    message="Hover text",
+    content=ft.Image(src="image.png"),  # TypeError: Tooltip.__init__() got an unexpected keyword argument 'content'
+    bgcolor=ft.Colors.GREY_900,
+)
+```
+
+**CORRECT - Tooltip is a property, not a wrapper widget:**
+```python
+# Method 1: Use tooltip property on any control
+ft.Image(
+    src="image.png",
+    tooltip="Hover text here"  # Simple string tooltip
+)
+
+# Method 2: Use Container with tooltip for interactive elements
+ft.Container(
+    content=ft.Image(src="image.png", width=200, height=200),
+    tooltip="Click to view larger preview",
+    on_click=lambda e: show_dialog(),  # Make it clickable
+    ink=True,  # Visual click feedback
+    border_radius=5,
+)
+
+# Method 3: Wrap existing control with Tooltip widget (message only)
+ft.Tooltip(
+    message="This is the hover text",
+    child=ft.Icon(ft.Icons.INFO),  # Use 'child', not 'content'
+)
+```
+
+**Key Points:**
+- `Tooltip` widget only accepts `message` (string) and `child` (widget) parameters
+- For custom tooltip styling, use the `tooltip` property on controls directly
+- For interactive hover + click behavior, use `Container` with both `tooltip` and `on_click`
+- The `Tooltip` widget does NOT support custom background, padding, or complex content
+
 ## Core Concepts
 
 ### Basic Structure
