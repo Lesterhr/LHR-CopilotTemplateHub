@@ -6,25 +6,25 @@ Centralized, versioned templates for AI-assisted development across multiple too
 
 ### 🎨 **Flet GUI Template** (v1.0.0)
 Desktop GUI patterns using Flet framework
-- **File**: `CopilotInstructions_FLET_GUI_TEMPLATE.md`
+- **File**: `flet-gui-template.instructions.md`
 - **Use for**: Python desktop applications with Flet
 - **Tags**: `flet`, `gui`, `python`, `desktop-app`
 
 ### 🏭 **S3D Symbol Instructions** (v1.0.0)
 SmartPlant 3D symbol discovery and template parsing
-- **File**: `CopilotInstructions_s3d-symbol-instructions.md`
+- **File**: `s3d-symbol-navigation-guide.instructions.md`
 - **Use for**: S3D symbol discovery, piping instrumentation
 - **Tags**: `s3d`, `smartplant-3d`, `symbols`, `piping`
 
 ### 📐 **SmartSketch README** (v1.0.0)
 SmartSketch project context and COM automation
-- **File**: `CopilotInstructions_SmartSketch-README.md`
+- **File**: `smartsketch-readme.instructions.md`
 - **Use for**: SmartSketch Add-In development
 - **Tags**: `smartsketch`, `intergraph`, `cad`, `com-automation`
 
 ### 🔌 **SmartSketch Integration Guide** (v1.0.0)
 SmartSketch API integration patterns
-- **File**: `CopilotInstructions_SmartSketch-INTEGRATION_GUIDE.md`
+- **File**: `smartsketch-integration-guide.instructions.md`
 - **Use for**: SmartSketch API automation and commands
 - **Tags**: `smartsketch`, `api-integration`, `com-automation`
 
@@ -39,13 +39,13 @@ Templates are automatically available in the repository creation wizard.
 curl -O https://raw.githubusercontent.com/Lesterhr/copilot-templates/main/manifest.json
 
 # Download specific template
-curl -O https://raw.githubusercontent.com/Lesterhr/copilot-templates/main/CopilotInstructions_FLET_GUI_TEMPLATE.md
+curl -O https://raw.githubusercontent.com/Lesterhr/copilot-templates/main/flet-gui-template.instructions.md
 ```
 
 ### Download Specific Version
 ```bash
 # Replace v1.0.0 with desired version tag
-curl -O https://raw.githubusercontent.com/Lesterhr/copilot-templates/v1.0.0/CopilotInstructions_FLET_GUI_TEMPLATE.md
+curl -O https://raw.githubusercontent.com/Lesterhr/copilot-templates/v1.0.0/flet-gui-template.instructions.md
 ```
 
 ## 📋 Template Structure
@@ -71,10 +71,10 @@ copilot-templates/
 ├── manifest.json                                      # Template registry
 ├── INDEX.md                                           # Human-readable index
 ├── README.md                                          # This file
-├── CopilotInstructions_FLET_GUI_TEMPLATE.md
-├── CopilotInstructions_s3d-symbol-instructions.md
-├── CopilotInstructions_SmartSketch-README.md
-└── CopilotInstructions_SmartSketch-INTEGRATION_GUIDE.md
+├── flet-gui-template.instructions.md
+├── s3d-symbol-navigation-guide.instructions.md
+├── smartsketch-readme.instructions.md
+└── smartsketch-integration-guide.instructions.md
 ```
 
 ## 🛠️ For Tool Developers
@@ -120,7 +120,7 @@ def check_updates(local_manifest, remote_manifest):
 
 ### Adding New Templates
 
-1. Create template with `CopilotInstructions_` prefix
+1. Create template with `.instructions.md` suffix (kebab-case naming)
 2. Add YAML metadata header
 3. Include "How AI Agents Should Use This Template" section
 4. Update `manifest.json` with template metadata
@@ -141,13 +141,15 @@ def check_updates(local_manifest, remote_manifest):
 
 All templates must follow this pattern:
 ```
-CopilotInstructions_<descriptive-name>.md
+<descriptive-name>.instructions.md
 ```
 
+Use kebab-case for multi-word names.
+
 Examples:
-- `CopilotInstructions_FLET_GUI_TEMPLATE.md`
-- `CopilotInstructions_Django_REST_API.md`
-- `CopilotInstructions_React_Components.md`
+- `flet-gui-template.instructions.md`
+- `django-rest-api.instructions.md`
+- `react-components.instructions.md`
 
 ## 📜 License
 
