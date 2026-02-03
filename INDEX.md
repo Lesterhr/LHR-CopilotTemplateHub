@@ -1,11 +1,19 @@
 # Copilot Instructions Index
 
-> **Purpose**: This file guides AI agents on which templates to use and when. It's automatically generated when templates are copied to new repositories.
+> **Purpose**: This file guides AI agents on which templates to use and when. Templates are organized following GitHub Copilot best practices.
+
+## Repository Structure
+
+This repository follows GitHub Copilot's official structure for custom instructions:
+
+- **Repository-wide instructions**: `.github/copilot-instructions.md` - Applies to all requests in this repository
+- **Path-specific instructions**: `.github/instructions/*.instructions.md` - Applies based on file context and patterns
 
 ## Available Templates
 
-### 🎨 **flet-gui-template.instructions.md** (v1.0.0)
+### 🎨 **flet-agent.instructions.md** (v1.0.0)
 - **Type**: GUI Framework
+- **Location**: `.github/instructions/flet-agent.instructions.md`
 - **When to use**: Building Flet-based desktop applications
 - **Applies to**: Python GUI projects, desktop apps with Flet framework
 - **Priority**: High (1)
@@ -15,6 +23,7 @@
 
 ### 🏭 **s3d-symbol-navigation-guide.instructions.md** (v1.0.0)
 - **Type**: Domain-Specific
+- **Location**: `.github/instructions/s3d-symbol-navigation-guide.instructions.md`
 - **When to use**: Working with SmartPlant 3D symbols, templates, or piping instrumentation
 - **Applies to**: S3D symbol discovery, DLL parsing, template folder traversal
 - **Priority**: Medium (2)
@@ -24,6 +33,7 @@
 
 ### 📐 **smartsketch-readme.instructions.md** (v1.0.0)
 - **Type**: Project Context
+- **Location**: `.github/instructions/smartsketch-readme.instructions.md`
 - **When to use**: SmartSketch development or COM automation projects
 - **Applies to**: SmartSketch Add-Ins, COM/ActiveX integration
 - **Priority**: High (1)
@@ -33,6 +43,7 @@
 
 ### 🔌 **smartsketch-integration-guide.instructions.md** (v1.0.0)
 - **Type**: Integration Guide
+- **Location**: `.github/instructions/smartsketch-integration-guide.instructions.md`
 - **When to use**: Implementing SmartSketch API integrations
 - **Applies to**: API wrappers, command implementations, event handlers
 - **Priority**: Medium (2)
@@ -80,24 +91,29 @@ Rules:
 ## How AI Agents Should Read This
 
 ### 1. **Check Active Templates**
-Look in this directory for all `*.instructions.md` files present.
+Look in `.github/instructions/` directory for all `*.instructions.md` files present.
 
-### 2. **Determine Context**
+### 2. **Read Repository-Wide Instructions**
+Check `.github/copilot-instructions.md` for general guidance that applies to all work in this repository.
+
+### 3. **Determine Context**
 - Check current file path and imports
 - Match against "Applies to" in template metadata
 - Use priority to resolve conflicts
 
-### 3. **Apply Patterns**
+### 4. **Apply Patterns**
+- Follow repository-wide instructions for general guidance
 - Follow the template with highest priority for the current file type
 - Reference secondary templates for cross-cutting concerns
 - Ignore templates that don't apply to current context
 
 ### 4. **Conflict Resolution**
 If multiple templates suggest different patterns:
-1. **Project-specific** templates override **general** templates
-2. **Higher priority** (lower number) takes precedence
-3. **Integration guides** complement base templates (additive, not exclusive)
-4. When unsure, preserve existing code style
+1. **Repository-wide instructions** provide base context for all work
+2. **Project-specific** templates override **general** templates
+3. **Higher priority** (lower number) takes precedence
+4. **Integration guides** complement base templates (additive, not exclusive)
+5. When unsure, preserve existing code style
 
 ---
 
@@ -114,13 +130,17 @@ If multiple templates suggest different patterns:
 
 ## Updating Templates
 
-Templates are sourced from: `github.com/Lesterhr/copilot-templates`
+Templates are maintained in this repository: `github.com/Lesterhr/LHR-CopilotTemplateHub`
 
-To get the latest versions:
+### To get the latest versions:
 1. Visit the template repository
-2. Check for updates in `manifest.json`
-3. Download updated templates manually or via AI-Promptbook
-4. Replace files in this `Copilot-Instructions/` folder
+2. Check for updates in `.github/instructions/` directory
+3. Download updated templates from `.github/instructions/` folder
+4. Replace files in your local `.github/instructions/` directory
 
-**Last Updated**: 2025-11-14
+### Template locations:
+- **Repository-wide**: `.github/copilot-instructions.md`
+- **Path-specific**: `.github/instructions/*.instructions.md`
+
+**Last Updated**: 2025-11-14  
 **Template Source Version**: 1.0.0
