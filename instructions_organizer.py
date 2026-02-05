@@ -7,8 +7,8 @@ Following the Flet Style Guide from .github/instructions/flet-styleguide.instruc
 """
 
 import flet as ft
-import os
 import shutil
+import sys
 from pathlib import Path
 
 
@@ -77,11 +77,10 @@ class InstructionFileCard(ft.Container):
 class DropZone(ft.Container):
     """A drop zone that can accept dragged instruction files"""
     
-    def __init__(self, title, is_archived, page, on_drop_callback):
+    def __init__(self, title, is_archived, on_drop_callback):
         super().__init__()
         self.title = title
         self.is_archived = is_archived
-        self.page = page
         self.on_drop_callback = on_drop_callback
         
         # Styling following flet-styleguide
@@ -136,7 +135,6 @@ class DropZone(ft.Container):
         
     def handle_drop(self, e):
         """Handle when an instruction file is dropped"""
-        src_data = e.src_id
         # The data is stored in the Draggable's data attribute
         if hasattr(e.control, 'content') and hasattr(e.control.content, 'data'):
             data = e.control.content.data
@@ -215,14 +213,12 @@ class InstructionsOrganizerApp:
         self.available_zone = DropZone(
             "Available Instructions",
             is_archived=False,
-            page=self.page,
             on_drop_callback=self.handle_file_move
         )
         
         self.archived_zone = DropZone(
             "Archived Instructions",
             is_archived=True,
-            page=self.page,
             on_drop_callback=self.handle_file_move
         )
         
@@ -305,34 +301,61 @@ class InstructionsOrganizerApp:
         else:
             # Fallback if data format is different
             return
+        
+        if not filename:
+            return
+        
+        # Validate and sanitize the filename to prevent path traversal
+        safe_filename = Path(filename).name
+        
+        # Reject if the sanitized name differs (indicating directory components)
+        if safe_filename != filename:
+            self.show_snackbar("Invalid file name.", ft.Colors.RED_400)
+            return
+        
+        # Ensure it's an instruction file
+        if not safe_filename.endswith(".instructions.md"):
+            self.show_snackbar("Unsupported file type.", ft.Colors.RED_400)
+            return
             
-        if filename and source_is_archived != target_is_archived:
+        if source_is_archived != target_is_archived:
             # Determine source and destination paths
             if source_is_archived:
-                source_path = self.archived_dir / filename
-                dest_path = self.instructions_dir / filename
+                source_path = self.archived_dir / safe_filename
+                dest_path = self.instructions_dir / safe_filename
             else:
-                source_path = self.instructions_dir / filename
-                dest_path = self.archived_dir / filename
+                source_path = self.instructions_dir / safe_filename
+                dest_path = self.archived_dir / safe_filename
             
             # Move the file
             try:
-                if source_path.exists():
-                    shutil.move(str(source_path), str(dest_path))
-                    
-                    # Show success message
+                if not source_path.exists():
                     self.show_snackbar(
-                        f"Moved {filename} to {'Archived' if target_is_archived else 'Available'}",
-                        ft.Colors.GREEN_400
-                    )
-                    
-                    # Reload files
-                    self.load_files()
-                else:
-                    self.show_snackbar(
-                        f"File not found: {filename}",
+                        f"File not found: {safe_filename}",
                         ft.Colors.ORANGE_400
                     )
+                    return
+                
+                # Check if destination file already exists
+                if dest_path.exists():
+                    self.show_snackbar(
+                        f"Cannot move {safe_filename}: a file with the same name already exists in the destination.",
+                        ft.Colors.ORANGE_400
+                    )
+                    return
+                
+                # Move the file
+                shutil.move(str(source_path), str(dest_path))
+                
+                # Show success message
+                self.show_snackbar(
+                    f"Moved {safe_filename} to {'Archived' if target_is_archived else 'Available'}",
+                    ft.Colors.GREEN_400
+                )
+                
+                # Reload files
+                self.load_files()
+                    
             except Exception as ex:
                 self.show_snackbar(
                     f"Error moving file: {str(ex)}",
@@ -358,8 +381,31 @@ class InstructionsOrganizerApp:
 
 def main(page: ft.Page):
     """Main entry point"""
-    app = InstructionsOrganizerApp(page)
+    InstructionsOrganizerApp(page)
 
 
 if __name__ == "__main__":
-    ft.app(target=main, view=ft.AppView.WEB_BROWSER, port=8550)
+    # Parse command-line arguments
+    import argparse
+    
+    parser = argparse.ArgumentParser(description="Instruction Files Organizer GUI")
+    parser.add_argument(
+        "--view",
+        choices=["desktop", "web"],
+        default="desktop",
+        help="View mode: desktop (default) or web browser"
+    )
+    parser.add_argument(
+        "--port",
+        type=int,
+        default=8550,
+        help="Port for web browser mode (default: 8550)"
+    )
+    
+    args = parser.parse_args()
+    
+    # Determine view mode
+    if args.view == "web":
+        ft.app(target=main, view=ft.AppView.WEB_BROWSER, port=args.port)
+    else:
+        ft.app(target=main)

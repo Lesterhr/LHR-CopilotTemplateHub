@@ -58,8 +58,11 @@ Die Anwendung öffnet sich als Desktop-Fenster.
 ### Web-Browser-Modus
 
 ```bash
+# Web-Browser-Modus
+python instructions_organizer.py --view web
+
 # Mit spezifischem Port (Standard: 8550)
-python instructions_organizer.py --port 8550
+python instructions_organizer.py --view web --port 8550
 ```
 
 Dann öffnen Sie `http://localhost:8550` in Ihrem Browser.

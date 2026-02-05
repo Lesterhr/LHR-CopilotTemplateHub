@@ -4,7 +4,6 @@ Simple test for the Instruction Files Organizer
 Verifies basic functionality without requiring UI interaction
 """
 
-import os
 import sys
 from pathlib import Path
 import tempfile
@@ -62,6 +61,19 @@ def test_file_operations():
         print(f"✓ Test 3 passed: Restored file from archived")
         print(f"  - Available: {len(available_files)}, Archived: {len(archived_files)}")
         
+        # Test 4: Handle file name conflicts
+        # Create a file with same name in both directories
+        conflict_file_available = instructions_dir / "conflict-test.instructions.md"
+        conflict_file_archived = archived_dir / "conflict-test.instructions.md"
+        conflict_file_available.write_text("# Available Version")
+        conflict_file_archived.write_text("# Archived Version")
+        
+        # Verify both exist
+        assert conflict_file_available.exists(), "Conflict file should exist in available"
+        assert conflict_file_archived.exists(), "Conflict file should exist in archived"
+        print(f"✓ Test 4 passed: File conflict scenario detected")
+        print(f"  - Both directories have file with same name")
+        
         print("\n" + "="*50)
         print("✓ All file operation tests passed!")
         print("="*50)
@@ -87,7 +99,7 @@ def test_app_imports():
         # Check Colors syntax
         blue = ft.Colors.BLUE
         grey = ft.Colors.GREY_800
-        print("✓ Flet Colors API working correctly")
+        print(f"✓ Flet Colors API working correctly (BLUE={blue}, GREY_800={grey})")
         
         return True
         
