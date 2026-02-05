@@ -202,8 +202,8 @@ class InstructionsOrganizerApp:
             ], spacing=5),
             padding=25,
             gradient=ft.LinearGradient(
-                begin=ft.alignment.center_left,
-                end=ft.alignment.center_right,
+                begin=ft.alignment.Alignment.CENTER_LEFT,
+                end=ft.alignment.Alignment.CENTER_RIGHT,
                 colors=["#1e3a8a", "#3b82f6"],
             ),
             border_radius=ft.border_radius.only(bottom_left=15, bottom_right=15),
@@ -406,6 +406,6 @@ if __name__ == "__main__":
     
     # Determine view mode
     if args.view == "web":
-        ft.app(target=main, view=ft.AppView.WEB_BROWSER, port=args.port)
+        ft.run(main, view=ft.AppView.WEB_BROWSER, port=args.port)
     else:
-        ft.app(target=main)
+        ft.run(main)
