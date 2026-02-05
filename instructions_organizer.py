@@ -203,8 +203,8 @@ class InstructionsOrganizerApp:
             ], spacing=5),
             padding=25,
             gradient=ft.LinearGradient(
-                begin=ft.Alignment(-1, 0),
-                end=ft.Alignment(1, 0),
+                begin=ft.alignment.center_left,
+                end=ft.alignment.center_right,
                 colors=["#1e3a8a", "#3b82f6"],
             ),
             border_radius=ft.BorderRadius.only(bottom_left=15, bottom_right=15),
@@ -407,6 +407,6 @@ if __name__ == "__main__":
     
     # Determine view mode
     if args.view == "web":
-        flet.run(main, view=ft.AppView.WEB_BROWSER, port=args.port)
+        ft.app(target=main, view=ft.AppView.WEB_BROWSER, port=args.port)
     else:
-        flet.run(main)
+        ft.app(target=main)
