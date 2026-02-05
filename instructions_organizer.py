@@ -6,6 +6,7 @@ Manage instruction files between Available and Archived sections with drag and d
 Following the Flet Style Guide from .github/instructions/flet-styleguide.instructions.md
 """
 
+import flet
 import flet as ft
 import shutil
 import sys
@@ -88,7 +89,7 @@ class DropZone(ft.Container):
         self.border_radius = 15
         self.padding = 20
         self.expand = True
-        self.border = ft.border.all(2, ft.Colors.GREY_700)
+        self.border = ft.Border.all(2, ft.Colors.GREY_700)
         
         self.files_column = ft.Column(
             spacing=5,
@@ -113,11 +114,11 @@ class DropZone(ft.Container):
             ], spacing=10),
             padding=15,
             gradient=ft.LinearGradient(
-                begin=ft.alignment.center_left,
-                end=ft.alignment.center_right,
+                begin=ft.Alignment(-1, 0),
+                end=ft.Alignment(1, 0),
                 colors=["#1e3a8a", "#3b82f6"],
             ),
-            border_radius=ft.border_radius.only(top_left=10, top_right=10),
+            border_radius=ft.BorderRadius.only(top_left=10, top_right=10),
         )
         
         # Drop target
@@ -202,11 +203,11 @@ class InstructionsOrganizerApp:
             ], spacing=5),
             padding=25,
             gradient=ft.LinearGradient(
-                begin=ft.alignment.center_left,
-                end=ft.alignment.center_right,
+                begin=ft.Alignment(-1, 0),
+                end=ft.Alignment(1, 0),
                 colors=["#1e3a8a", "#3b82f6"],
             ),
-            border_radius=ft.border_radius.only(bottom_left=15, bottom_right=15),
+            border_radius=ft.BorderRadius.only(bottom_left=15, bottom_right=15),
         )
         
         # Create drop zones
@@ -239,7 +240,7 @@ class InstructionsOrganizerApp:
                 ft.Icon(ft.Icons.REFRESH, size=18),
                 ft.Text("Refresh", size=14, weight=ft.FontWeight.W_500),
             ], spacing=8, tight=True),
-            padding=ft.padding.symmetric(horizontal=24, vertical=12),
+            padding=ft.Padding.symmetric(horizontal=24, vertical=12),
             bgcolor=ft.Colors.GREY_800,
             border_radius=8,
             ink=True,
@@ -255,7 +256,7 @@ class InstructionsOrganizerApp:
             ], alignment=ft.MainAxisAlignment.END),
             padding=20,
             bgcolor=ft.Colors.with_opacity(0.05, ft.Colors.WHITE),
-            border=ft.border.only(top=ft.BorderSide(1, ft.Colors.GREY_800)),
+            border=ft.Border.only(top=ft.BorderSide(1, ft.Colors.GREY_800)),
         )
         
         # Main layout
@@ -406,6 +407,6 @@ if __name__ == "__main__":
     
     # Determine view mode
     if args.view == "web":
-        ft.app(target=main, view=ft.AppView.WEB_BROWSER, port=args.port)
+        flet.run(main, view=ft.AppView.WEB_BROWSER, port=args.port)
     else:
-        ft.app(target=main)
+        flet.run(main)
